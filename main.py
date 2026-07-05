@@ -12,11 +12,12 @@ from langchain_chroma import Chroma # 4. Chroma 벡터 저장소
 import streamlit as st
 import tempfile
 import os
-
+from streamlit_extras.buy_me_a_coffee import button
 
 #제목
 st.title("ChatPDF")
 st.write("---")
+
 
 #OpenAI Key 입력 받기
 openai_key = st.text_input('OPEN_AI_API_KEY', type = 'password')
