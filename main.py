@@ -18,6 +18,9 @@ import os
 st.title("ChatPDF")
 st.write("---")
 
+#OpenAI Key 입력 받기
+openai_key = st.text_input('OPEN_AI_API_KEY', type = 'password')
+
 #파일 업로드
 uploaded_file = st.file_uploader("PDF파일을 올려주세요.", type = ['.pdf'])
 st.write("---")
@@ -51,7 +54,7 @@ if uploaded_file is not None:
     texts = text_splitter.split_documents(pages)
 
     #embeddings
-    embeddings_model = OpenAIEmbeddings()
+    embeddings_model = OpenAIEmbeddings(openai_api_key = openai_key)
 
     # load it into Chroma
     db = Chroma.from_documents(texts, embeddings_model)
@@ -66,7 +69,7 @@ if uploaded_file is not None:
             if not question.strip():
                 st.warning("질문을 입력하세요.")
             else:
-                llm = ChatOpenAI(temperature=0) # 쓰고싶은 모델만 바꿔서 끼워넣으면 됩니다
+                llm = ChatOpenAI(temperature=0, openai_api_key = openai_key) # 쓰고싶은 모델만 바꿔서 끼워넣으면 됩니다
                 
                 retriever = db.as_retriever(search_type="mmr", search_kwargs={"k": 6, "fetch_k": 20})
                 docs = retriever.invoke(question)
