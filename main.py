@@ -23,9 +23,12 @@ st.title("ChatPDF")
 st.write("---")
 
 
-#OpenAI Key 입력 받기
-default_key = os.getenv("OPENAI_API_KEY", "")
-openai_key = st.text_input('OPEN_AI_API_KEY', value = default_key, type = 'password')
+# 사이드바에서 OpenAI Key 입력 받기
+with st.sidebar:
+    st.title("설정")
+    default_key = os.getenv("OPENAI_API_KEY", "")
+    openai_key = st.text_input('OpenAI API Key', value=default_key, type='password', placeholder="sk-...")
+
 
 #파일 업로드
 uploaded_file = st.file_uploader("PDF파일을 올려주세요.", type = ['.pdf'])
